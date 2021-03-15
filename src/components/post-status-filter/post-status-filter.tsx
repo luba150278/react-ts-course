@@ -3,8 +3,8 @@ import './post-status-filter.css';
 
 const PostStatusFilter: React.FC = () => (
   <div className="btn-group">
-    <button>All</button>
-    <button>Liked</button>
+    <button className="btn btn-info">All</button>
+    <button className="btn btn-outline-secondary">Liked</button>
   </div>
 );
 
