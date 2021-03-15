@@ -1,4 +1,5 @@
 import React from 'react';
+import './app-header.css';
 
 const AppHeader: React.FC = () => (
   <div className="app-header">
