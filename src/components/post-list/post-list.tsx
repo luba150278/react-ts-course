@@ -1,6 +1,8 @@
 import React from 'react';
+import { ListGroup } from 'reactstrap';
 import { ILabel } from '../../interfaces';
 import PostListItem from '../post-list-item/post-list-item';
+import './post-list.css';
 
 type TodoListProps = {
   todos: ILabel[];
@@ -17,7 +19,7 @@ const PostList: React.FC<TodoListProps> = ({ todos }) => {
   });
   return (
     <div className="btn-group d-flex w-100">
-      <ul className="app-list list-group w-100">{elements}</ul>
+      <ListGroup className="app-list w-100">{elements}</ListGroup>
     </div>
   );
 };

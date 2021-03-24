@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import AppHeader from '../app-header/app-header';
 import SearchPanel from '../search-panel/search-panel';
 import PostStatusFilter from '../post-status-filter/post-status-filter';
 import PostList from '../post-list/post-list';
 import PostAddForm from '../post-add-form/post-add-form';
-import './app.css';
 import { ILabel } from '../../interfaces';
+
+const AppBlock = styled.div`
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 20px;
+  border-radius: 4px;
+`;
+
+const StyledAppBlock = styled(AppBlock)`
+  background: #e8eaf6;
+`;
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ILabel[]>([]);
@@ -19,7 +30,7 @@ const App: React.FC = () => {
     setTodos(saved);
   }, []);
   return (
-    <div className="app">
+    <StyledAppBlock>
       <AppHeader />
       <div className="search-panel d-flex">
         <SearchPanel />
@@ -27,7 +38,7 @@ const App: React.FC = () => {
       </div>
       <PostList todos={todos} />
       <PostAddForm />
-    </div>
+    </StyledAppBlock>
   );
 };
 
