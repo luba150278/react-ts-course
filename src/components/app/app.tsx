@@ -11,9 +11,10 @@ const App: React.FC = () => {
   const [todos, setTodos] = useState<ILabel[]>([]);
   useEffect(() => {
     const saved = [
-      { label: 'Going to learn React', important: true },
-      { label: 'Going to learn PHP', important: false },
-      { label: 'Going to learn Typescript', important: false },
+      { label: 'Going to learn Laravel', important: true, id: 'ad' },
+      { label: 'Going to learn React', important: true, id: 'ac' },
+      { label: 'Going to learn PHP', important: false, id: 'ab' },
+      { label: 'Going to learn Typescript', important: false, id: 'aa' },
     ];
     setTodos(saved);
   }, []);

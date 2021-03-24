@@ -7,11 +7,14 @@ type TodoListProps = {
 };
 
 const PostList: React.FC<TodoListProps> = ({ todos }) => {
-  const elements = todos.map((item: ILabel) => (
-    <li className="list-group-item">
-      <PostListItem {...item} />
-    </li>
-  ));
+  const elements = todos.map((item: ILabel) => {
+    const { id, ...itemProps } = item;
+    return (
+      <li key={id} className="list-group-item">
+        <PostListItem {...itemProps} />
+      </li>
+    );
+  });
   return (
     <div className="btn-group d-flex w-100">
       <ul className="app-list list-group w-100">{elements}</ul>
