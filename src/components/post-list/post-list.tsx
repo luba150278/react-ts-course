@@ -2,15 +2,14 @@ import React from 'react';
 import { ILabel } from '../../interfaces';
 import PostListItem from '../post-list-item/post-list-item';
 
-const PostList: React.FC = () => {
-  const data: ILabel[] = [
-    { label: 'Going to learn React', important: true },
-    { label: 'Going to learn PHP', important: false },
-    { label: 'Going to learn Typescript', important: false },
-  ];
-  const elements = data.map((item: ILabel) => (
+type TodoListProps = {
+  todos: ILabel[];
+};
+
+const PostList: React.FC<TodoListProps> = ({ todos }) => {
+  const elements = todos.map((item: ILabel) => (
     <li className="list-group-item">
-      <PostListItem label={item.label} important={item.important} />
+      <PostListItem {...item} />
     </li>
   ));
   return (

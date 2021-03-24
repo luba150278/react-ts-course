@@ -2,7 +2,7 @@ import React from 'react';
 import { ILabel } from '../../interfaces';
 import './post-list-item.css';
 
-const PostListItem: React.FC<ILabel> = ({ label, important = false }) => {
+const PostListItem: React.FC<ILabel> = ({ label, important }) => {
   let classNames = 'app-list-item d-flex justify-content-between';
   if (important) classNames += ' important';
   return (
