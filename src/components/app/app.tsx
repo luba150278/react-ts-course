@@ -25,10 +25,10 @@ const App: React.FC = () => {
   const [todos, setTodos] = useState<ILabel[]>([]);
   useEffect(() => {
     const saved = [
-      { label: 'Going to learn Laravel', important: true, id: 'ad' },
-      { label: 'Going to learn React', important: true, id: 'ac' },
-      { label: 'Going to learn PHP', important: false, id: 'ab' },
-      { label: 'Going to learn Typescript', important: false, id: 'aa' },
+      { label: 'Going to learn Laravel', important: true, liked: true, id: 'ad' },
+      { label: 'Going to learn React', important: true, liked: true, id: 'ac' },
+      { label: 'Going to learn PHP', important: false, liked: true, id: 'ab' },
+      { label: 'Going to learn Typescript', important: false, liked: true, id: 'aa' },
     ] as ILabel[];
     setTodos(saved);
   }, []);
@@ -45,8 +45,28 @@ const App: React.FC = () => {
       label,
       id: String(Date.now()),
       important: false,
+      liked: false,
     };
     setTodos((prev) => [newTodo, ...prev]);
+  };
+  const toggleImportant = (id: string): void => {
+    setTodos((prev) => {
+      const index = prev.findIndex((elem) => elem.id === id);
+      const old = prev[index];
+      const newItem = { ...old, important: !old.important };
+      const newArr = [...prev.slice(0, index), newItem, ...prev.slice(index + 1)];
+      return newArr;
+    });
+  };
+
+  const toggleLiked = (id: string): void => {
+    setTodos((prev) => {
+      const index = prev.findIndex((elem) => elem.id === id);
+      const old = prev[index];
+      const newItem = { ...old, liked: !old.liked };
+      const newArr = [...prev.slice(0, index), newItem, ...prev.slice(index + 1)];
+      return newArr;
+    });
   };
 
   return (
@@ -56,7 +76,7 @@ const App: React.FC = () => {
         <SearchPanel />
         <PostStatusFilter />
       </div>
-      <PostList todos={todos} onDelete={deletItem} />
+      <PostList todos={todos} onDelete={deletItem} onImportant={toggleImportant} onLiked={toggleLiked} />
       <PostAddForm onAdd={addItem} />
     </StyledAppBlock>
   );

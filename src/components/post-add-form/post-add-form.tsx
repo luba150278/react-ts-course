@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import './post-add-form.css';
 
@@ -7,17 +8,22 @@ interface TodoFormProps {
 
 const PostAddForm: React.FC<TodoFormProps> = (props) => {
   const [title, setTitle] = useState<string>('');
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => setTitle(event.target.value);
-  const keyPressHandler = (event: React.KeyboardEvent): void => {
-    if (event.key === 'Enter') {
+  function addIsNotEmty(): void {
+    if (title !== '') {
       props.onAdd(title);
       setTitle('');
     }
+  }
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => setTitle(event.target.value);
+  const keyPressHandler = (event: React.KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      addIsNotEmty();
+    }
   };
   const addItem = (): void => {
-    props.onAdd(title);
-    setTitle('');
+    addIsNotEmty();
   };
+
   return (
     <div className="bottom-panel d-flex">
       <input
@@ -29,7 +35,7 @@ const PostAddForm: React.FC<TodoFormProps> = (props) => {
         placeholder="What do you think?"
         onKeyPress={keyPressHandler}
       />
-      <button className="btn btn-outline-secondary" onClick={addItem}>
+      <button className="btn btn-outline-primary" onClick={addItem}>
         Add
       </button>
     </div>

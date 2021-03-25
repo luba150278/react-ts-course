@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { ListGroup } from 'reactstrap';
 import { ILabel } from '../../interfaces';
@@ -8,14 +7,21 @@ import './post-list.css';
 type TodoListProps = {
   todos: ILabel[];
   onDelete(id: string): void;
+  onImportant(id: string): void;
+  onLiked(id: string): void;
 };
 
-const PostList: React.FC<TodoListProps> = ({ todos, onDelete }) => {
+const PostList: React.FC<TodoListProps> = ({ todos, onDelete, onImportant, onLiked }) => {
   const elements = todos.map((item: ILabel) => {
     const { id, ...itemProps } = item;
     return (
       <li key={id} className="list-group-item">
-        <PostListItem {...itemProps} onDelete={(): void => onDelete(id)} />
+        <PostListItem
+          {...itemProps}
+          onDelete={(): void => onDelete(id)}
+          onImportant={(): void => onImportant(id)}
+          onLiked={(): void => onLiked(id)}
+        />
       </li>
     );
   });
