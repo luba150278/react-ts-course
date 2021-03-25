@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AppHeader from '../app-header/app-header';
@@ -36,7 +37,7 @@ const App: React.FC = () => {
         <SearchPanel />
         <PostStatusFilter />
       </div>
-      <PostList todos={todos} />
+      <PostList todos={todos} onDelete={(id): void => console.log(id)} />
       <PostAddForm />
     </StyledAppBlock>
   );

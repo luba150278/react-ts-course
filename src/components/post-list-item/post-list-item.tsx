@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { ILabel } from '../../interfaces';
+/* import { ILabel } from '../../interfaces'; */
 import './post-list-item.css';
 
-export default class PostListItem extends Component<ILabel, { important: boolean; like: boolean }> {
-  constructor(props: ILabel) {
+type TodoListItem = {
+  label: string;
+  onDelete(): void;
+};
+export default class PostListItem extends Component<TodoListItem, { important: boolean; like: boolean }> {
+  constructor(props: TodoListItem) {
     super(props);
     this.state = {
       important: false,
@@ -26,7 +30,7 @@ export default class PostListItem extends Component<ILabel, { important: boolean
   }
 
   render(): JSX.Element {
-    const { label } = this.props;
+    const { label, onDelete } = this.props;
     const { important, like } = this.state;
 
     let classNames = 'app-list-item d-flex justify-content-between';
@@ -42,7 +46,7 @@ export default class PostListItem extends Component<ILabel, { important: boolean
           <button className="btn-star btn-sm" onClick={this.onImportant}>
             <i className="fa fa-star" />
           </button>
-          <button className="btn-trash btn-sm">
+          <button className="btn-trash btn-sm" onClick={onDelete}>
             <i className="fa fa-trash-o" />
           </button>
           <i className="fa fa-heart" />

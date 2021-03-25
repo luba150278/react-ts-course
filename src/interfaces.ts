@@ -1,5 +1,5 @@
 export interface ILabel {
-  id?: string;
+  id: string;
   label: string;
   important?: boolean;
 }
