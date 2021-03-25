@@ -30,6 +30,7 @@ const App: React.FC = () => {
     ];
     setTodos(saved);
   }, []);
+
   return (
     <StyledAppBlock>
       <AppHeader />
