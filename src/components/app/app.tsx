@@ -33,12 +33,22 @@ const App: React.FC = () => {
     setTodos(saved);
   }, []);
 
-  const removeHandler = (id: string): void => {
-    const shoudRemove = confirm('Are you sure to delete the to-do item?');
+  const deletItem = (id: string): void => {
+    const shoudRemove = confirm('Are you sure to delete this item?');
     if (shoudRemove) {
       setTodos((prev) => prev.filter((todo) => todo.id !== id));
     }
   };
+
+  const addItem = (label: string): void => {
+    const newTodo: ILabel = {
+      label,
+      id: String(Date.now()),
+      important: false,
+    };
+    setTodos((prev) => [newTodo, ...prev]);
+  };
+
   return (
     <StyledAppBlock>
       <AppHeader />
@@ -46,8 +56,8 @@ const App: React.FC = () => {
         <SearchPanel />
         <PostStatusFilter />
       </div>
-      <PostList todos={todos} onDelete={removeHandler} />
-      <PostAddForm />
+      <PostList todos={todos} onDelete={deletItem} />
+      <PostAddForm onAdd={addItem} />
     </StyledAppBlock>
   );
 };
