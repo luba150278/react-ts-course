@@ -33,6 +33,7 @@ const App: React.FC = () => {
     setTodos(data);
   }, []);
   const [term, setTerm] = useState<string>('');
+  const [filter, setFilter] = useState<string>('all');
 
   const deletItem = (id: string): void => {
     const shoudRemove = confirm('Are you sure to delete this item?');
@@ -81,14 +82,25 @@ const App: React.FC = () => {
     setTerm(title);
   };
 
-  const visiblePosts = searchPost(todos, term);
+  const filterPost = (items: ILabel[], filterText: string): ILabel[] => {
+    if (filterText === 'like') {
+      return items.filter((item) => item.like);
+    }
+    return items;
+  };
+
+  const onFilterSelect = (title: string): void => {
+    setFilter(title);
+  };
+
+  const visiblePosts = filterPost(searchPost(todos, term), filter);
   // console.log(visiblePosts);
   return (
     <StyledAppBlock>
       <AppHeader liked={liked} allPosts={allPosts} />
       <div className="search-panel d-flex">
         <SearchPanel onUpdateSearch={updateSearch} />
-        <PostStatusFilter />
+        <PostStatusFilter filter={filter} onFilterSelect={onFilterSelect} />
       </div>
       <PostList todos={visiblePosts} onDelete={deletItem} onImportant={toggleImportant} onLiked={toggleLiked} />
       <PostAddForm onAdd={addItem} />

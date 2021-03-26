@@ -1,17 +1,37 @@
-import React from 'react';
-import { Button } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
 import './post-status-filter.css';
 
-const PostStatusFilter: React.FC = () => (
-  <div className="btn-group">
-    <Button outline color="info">
-      All
-    </Button>
+type Button = {
+  name: string;
+  label: string;
+};
 
-    <Button outline color="secondary">
-      Liked
-    </Button>
-  </div>
-);
+type Buttons = {
+  filter: string;
+  onFilterSelect(name: string): void;
+};
+
+const PostStatusFilter: React.FC<Buttons> = ({ filter, onFilterSelect }) => {
+  const [todos, setTodos] = useState<Button[]>([]);
+  useEffect(() => {
+    const data = [
+      { name: 'all', label: 'All' },
+      { name: 'like', label: 'Liked' },
+    ] as Button[];
+    setTodos(data);
+  }, []);
+
+  const buttons = todos.map(({ name, label }) => {
+    const active = filter === name;
+    const clazz = active ? 'btn-info' : 'btn-outline-secondary';
+    return (
+      <button type="button" className={`btn ${clazz}`} key={name} onClick={(): void => onFilterSelect(name)}>
+        {label}
+      </button>
+    );
+  });
+
+  return <div className="btn-group">{buttons}</div>;
+};
 
 export default PostStatusFilter;

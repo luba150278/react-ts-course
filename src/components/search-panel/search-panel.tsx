@@ -6,12 +6,13 @@ type SearchProps = {
 };
 
 const SearchPanel: React.FC<SearchProps> = (props) => {
-  const XXX = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const changeList = (event: React.ChangeEvent<HTMLInputElement>): void => {
     props.onUpdateSearch(event.target.value);
-    // setTitle('');
   };
 
-  return <input type="text" placeholder="Search by items" className="form-control search-input" onChange={XXX} />;
+  return (
+    <input type="text" placeholder="Search by items" className="form-control search-input" onChange={changeList} />
+  );
 };
 
 export default SearchPanel;
