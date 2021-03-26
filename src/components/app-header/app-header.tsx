@@ -20,11 +20,18 @@ const Header = styled.div<{ colored: boolean }>`
     color: grey;
   }
 `;
+
+type Liked = {
+  liked: number;
+  allPosts: number;
+};
 /* если хотим изменить div на ссылку например используем as="a" */
-const AppHeader: React.FC = () => (
-  <Header as="a" colored>
+const AppHeader: React.FC<Liked> = ({ liked, allPosts }) => (
+  <Header colored>
     <h1>Lyubov Myetolkina</h1>
-    <h2>5 items, liked 0</h2>
+    <h2>
+      {allPosts} items, liked {liked}
+    </h2>
   </Header>
 );
 

@@ -5,19 +5,19 @@ import './post-list-item.css';
 type TodoListItem = {
   label: string;
   important: boolean;
-  liked: boolean;
+  like: boolean;
   onDelete(): void;
   onImportant(): void;
   onLiked(): void;
 };
 
-const PostListItem: React.FC<TodoListItem> = ({ label, important, liked, onDelete, onLiked, onImportant }) => {
+const PostListItem: React.FC<TodoListItem> = ({ label, important, like, onDelete, onLiked, onImportant }) => {
   let classNames = 'app-list-item d-flex justify-content-between';
   if (important) {
     classNames += ' important';
   }
 
-  if (liked) {
+  if (like) {
     classNames += ' like';
   }
   return (

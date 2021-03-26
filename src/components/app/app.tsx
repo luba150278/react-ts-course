@@ -24,14 +24,15 @@ const StyledAppBlock = styled(AppBlock)`
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ILabel[]>([]);
   useEffect(() => {
-    const saved = [
-      { label: 'Going to learn Laravel', important: true, liked: true, id: 'ad' },
-      { label: 'Going to learn React', important: true, liked: true, id: 'ac' },
-      { label: 'Going to learn PHP', important: false, liked: true, id: 'ab' },
-      { label: 'Going to learn Typescript', important: false, liked: true, id: 'aa' },
+    const data = [
+      { label: 'Going to learn Laravel', important: true, like: true, id: 'ad' },
+      { label: 'Going to learn React', important: true, like: true, id: 'ac' },
+      { label: 'Going to learn PHP', important: false, like: true, id: 'ab' },
+      { label: 'Going to learn Typescript', important: false, like: true, id: 'aa' },
     ] as ILabel[];
-    setTodos(saved);
+    setTodos(data);
   }, []);
+  const [term, setTerm] = useState<string>('');
 
   const deletItem = (id: string): void => {
     const shoudRemove = confirm('Are you sure to delete this item?');
@@ -45,38 +46,51 @@ const App: React.FC = () => {
       label,
       id: String(Date.now()),
       important: false,
-      liked: false,
+      like: false,
     };
     setTodos((prev) => [newTodo, ...prev]);
   };
+
+  const changeItem = (id: string, field: boolean, prev: ILabel[]): ILabel[] => {
+    const index = prev.findIndex((elem) => elem.id === id);
+    const old = prev[index];
+    const newItem = field ? { ...old, important: !old.important } : { ...old, like: !old.like };
+    const newArr = [...prev.slice(0, index), newItem, ...prev.slice(index + 1)];
+    return newArr;
+  };
+
   const toggleImportant = (id: string): void => {
-    setTodos((prev) => {
-      const index = prev.findIndex((elem) => elem.id === id);
-      const old = prev[index];
-      const newItem = { ...old, important: !old.important };
-      const newArr = [...prev.slice(0, index), newItem, ...prev.slice(index + 1)];
-      return newArr;
-    });
+    setTodos((prev) => changeItem(id, true, prev));
   };
 
   const toggleLiked = (id: string): void => {
-    setTodos((prev) => {
-      const index = prev.findIndex((elem) => elem.id === id);
-      const old = prev[index];
-      const newItem = { ...old, liked: !old.liked };
-      const newArr = [...prev.slice(0, index), newItem, ...prev.slice(index + 1)];
-      return newArr;
-    });
+    setTodos((prev) => changeItem(id, false, prev));
   };
 
+  const liked = todos.filter((item) => item.like).length;
+  const allPosts = todos.length;
+  const searchPost = (items: ILabel[], searchText: string): ILabel[] => {
+    if (searchText.length === 0) {
+      return items;
+    }
+
+    return items.filter((item) => item.label.indexOf(searchText) > -1);
+  };
+
+  const updateSearch = (title: string): void => {
+    setTerm(title);
+  };
+
+  const visiblePosts = searchPost(todos, term);
+  // console.log(visiblePosts);
   return (
     <StyledAppBlock>
-      <AppHeader />
+      <AppHeader liked={liked} allPosts={allPosts} />
       <div className="search-panel d-flex">
-        <SearchPanel />
+        <SearchPanel onUpdateSearch={updateSearch} />
         <PostStatusFilter />
       </div>
-      <PostList todos={todos} onDelete={deletItem} onImportant={toggleImportant} onLiked={toggleLiked} />
+      <PostList todos={visiblePosts} onDelete={deletItem} onImportant={toggleImportant} onLiked={toggleLiked} />
       <PostAddForm onAdd={addItem} />
     </StyledAppBlock>
   );

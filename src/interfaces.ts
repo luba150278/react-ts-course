@@ -2,5 +2,5 @@ export interface ILabel {
   id: string;
   label: string;
   important: boolean;
-  liked: boolean;
+  like: boolean;
 }
